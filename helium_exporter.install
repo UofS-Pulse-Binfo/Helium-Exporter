@@ -1,0 +1,7 @@
+<?php
+
+/**
+ * @file
+ * Contains all schema api and hook_install()/hook_uninstall()
+ * implementations required by this module.
+ */

@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * The main functionality for this module.
+ */
+
+// Include general API and helper functions.
+module_load_include('inc', 'helium_exporter', 'api/helium_exporter.api');
+
+ /**
+  * Implements hook_menu().
+  */
+function helium_exporter_menu() {
+  $items['data/export/helium'] = array(
+    'title' => 'Visualize plant pedigrees and overlay categorical data using Helium:',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('helium_exporter_form'),
+    'access arguments' => array('access helium_exporter'),
+    'file' => 'includes/helium_exporter.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function helium_exporter_permission() {
+  return array(
+    'access export_for_helium' => array(
+      'title' => t('Access Export for Helium Page'),
+    )
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function helium_exporter_theme($existing, $type, $theme, $path) {
+  $items['helium_exporter_form'] = array(
+    'render element' => 'form',
+    'template' => 'helium_exporter_page',
+    'path' => $path . '/theme',
+  );
+
+  return $items;
+}
+
+/**
+ * Implement hook_preprocess_HOOK().
+ */
+function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
+  $path = drupal_get_path('module', 'helium_exporter');
+ 
+  // Attach script and style.
+  drupal_add_css($path . '/theme/css/style-helium-exporter-page.css');    
+  drupal_add_js($path . '/theme/script/script-helium-exporter-page.js', array('type' => 'file', 'scope' => 'footer'));
+
+  // Define template variables.
+  $variables['path_module'] = $GLOBALS['base_url'] . '/' . $path;
+
+  $variables['helium_resource'] = array(
+    'download' => 'https://github.com/cardinalb/helium-docs/wiki/Download-Helium',
+    'information' => 'https://github.com/cardinalb/helium-docs/wiki',
+    'help' => 'https://github.com/cardinalb/helium-docs/wiki/Data-Formats'
+  );
+}

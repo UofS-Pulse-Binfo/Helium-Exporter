@@ -1,0 +1,55 @@
+/**
+ * @file
+ * Master CSS file.
+ */
+
+ #helium-exporter-show-window {
+  display: none;
+  border-bottom: 1px solid #CCCCCC;
+  cursor: pointer;
+  margin: 20px 0;
+  padding: 0 0 15px 0;
+  text-align: center;
+  
+  -moz-box-shadow:    0 5px 7px -9px #333333;
+  -webkit-box-shadow: 0 5px 7px -9px #333333;
+  box-shadow:         0 5px 7px -9px #333333;
+}
+
+#helium-exporter-show-window img {
+  margin: 0 auto;
+}
+
+/* Steps */
+#helium-exporter-show-steps {
+  margin: 15px 0 20px 0;
+  position: relative; 
+}
+
+.helium-exporter-show-steps-item {
+  float: left;
+  width: 33%;
+}
+
+.helium-exporter-show-steps-item div {
+  margin: 0 0 0 30px;
+  text-align: left;
+}
+
+.helium-exporter-show-steps-item div strong {
+  display: block;
+  font-size: 1.2em;
+}
+
+.helium-exporter-show-steps-item div a {
+  display: block;
+  margin: 15px 0 0 0;
+}
+
+.helium-exporter-float-right {
+  float: right;
+}
+
+.helium-exporter-clear-float {
+  clear: both;
+}

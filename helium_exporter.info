@@ -1,0 +1,4 @@
+name = Data Export for Helium Pedigree Visualization
+description = Provides a data export of germplasm and phenotypic data for visualization using Helium.
+core = 7.x
+package = Tripal Extensions
