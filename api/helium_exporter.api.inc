@@ -14,5 +14,5 @@ function helium_exporter_get_experiments() {
     ) ORDER BY name ASC
   ");
 
-  return ($all_project->rowCount() > 0) ? $all_project->fetchAssoc(0, 1) : 0;
+  return ($all_project->rowCount() > 0) ? $all_project->fetchAllAssoc(0, 1) : 0;
 }

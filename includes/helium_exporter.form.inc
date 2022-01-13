@@ -12,6 +12,7 @@ function helium_exporter_form($form, &$form_state) {
   $form['download_data'] = array(
     '#type' => 'fieldset',
     '#title' => t('Download Data'),
+    '#id' => 'helium-exporter-download-fieldset'
   );
   
   $experiment_options = helium_exporter_get_experiments();
@@ -19,6 +20,7 @@ function helium_exporter_form($form, &$form_state) {
   $form['download_data']['experiment_select'] = array(
     '#type' => 'select',
     '#title' => '',
+    '#options' => $experiment_options
   );
 
   return $form;

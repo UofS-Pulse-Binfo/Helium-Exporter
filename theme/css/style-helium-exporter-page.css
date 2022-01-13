@@ -3,7 +3,60 @@
  * Master CSS file.
  */
 
- #helium-exporter-show-window {
+#helium-exporter-header {
+  background-color: #314355;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #FFFFFF;
+  font-size: 1.1em;
+  padding: 10px 0 10px 20px;
+}
+
+#helium-exporter-title {
+  float: left;
+  font-size: 1.1em;
+}
+
+#helium-exporter-help {
+  float: right;
+}
+
+#helium-exporter-help img {
+  padding: 0;
+  margin: 0 15px 0 0;
+}
+
+.helium-exporter-copy-page {
+  border: 1px;
+  border-style: solid;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  -moz-box-shadow:    1px 1px 5px 1px #EAEAEA;
+  -webkit-box-shadow: 1px 1px 5px 1px #EAEAEA;
+  box-shadow:         inset 1px 1px 5px 1px #EAEAEA;
+
+  background-color: #FFFFFF;
+  min-height: 200px;
+  padding: 20px 40px 40px 40px;
+  text-align: center;
+}
+
+.helium-exporter-content-wrapper {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+
+.helium-exporter-content-wrapper h2 {
+  padding: 0;
+  margin: 0;
+}
+
+#helium-exporter-show-window {
   display: none;
   border-bottom: 1px solid #CCCCCC;
   cursor: pointer;
@@ -17,22 +70,31 @@
 }
 
 #helium-exporter-show-window img {
-  margin: 0 auto;
+  margin: 0;
+  height: 70%;
+  width: 70%;
 }
 
-/* Steps */
 #helium-exporter-show-steps {
-  margin: 15px 0 20px 0;
+  margin: 15px auto 20px auto;
+  padding-left: 50px;
   position: relative; 
+  width: 70%;
 }
 
 .helium-exporter-show-steps-item {
   float: left;
-  width: 33%;
+  font-size: 1.1em;
+  font-weight: normal;
+  width: 30%;
+  margin: 0 0 0 4.5%;
+}
+
+.helium-exporter-show-steps-item:first-child {
+  margin-left: 0;
 }
 
 .helium-exporter-show-steps-item div {
-  margin: 0 0 0 30px;
   text-align: left;
 }
 
@@ -42,14 +104,15 @@
 }
 
 .helium-exporter-show-steps-item div a {
+  font-size: 0.9em;
   display: block;
   margin: 15px 0 0 0;
 }
 
-.helium-exporter-float-right {
-  float: right;
-}
-
 .helium-exporter-clear-float {
   clear: both;
+}
+
+#helium-exporter-download-fieldset {
+  padding: 20px;
 }

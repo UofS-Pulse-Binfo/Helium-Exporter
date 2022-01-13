@@ -13,7 +13,7 @@ module_load_include('inc', 'helium_exporter', 'api/helium_exporter.api');
   */
 function helium_exporter_menu() {
   $items['data/export/helium'] = array(
-    'title' => 'Visualize plant pedigrees and overlay categorical data using Helium:',
+    'title' => t(''),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('helium_exporter_form'),
     'access arguments' => array('access helium_exporter'),
@@ -29,8 +29,8 @@ function helium_exporter_menu() {
  */
 function helium_exporter_permission() {
   return array(
-    'access export_for_helium' => array(
-      'title' => t('Access Export for Helium Page'),
+    'access helium_exporter' => array(
+      'title' => t('Access Helium Export Page'),
     )
   );
 }
