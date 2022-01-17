@@ -22,38 +22,35 @@
       </p>
       
       <div id="helium-exporter-show-window">
-        <img id="helium-exporter-diagram" src="<?php print $path_module . '/theme/images/application-install-steps.gif'; ?>" width="900" height="200" style="border: none" alt="How to visualize data using helium" title="How to visualize data using helium" />
+        <div id="helium-exporter-bg-line">...</div>
         <div id="helium-exporter-show-steps">
-         
           <div class="helium-exporter-show-steps-item">
-            <div>
-              <strong>Step #1:</strong>
-              <p>
-                Download and install Helium viewer<br />application in your computer.
-                <a href="<?php print $helium_resource['download']; ?>">&#xbb; Download and install Helium</a>
-              </p>
-            </div>
+            <img src="<?php print $path_module . '/theme/images/helium-export-step-01.gif'; ?>" alt="Step 01 : Install" title="Step 01 : Install" />
+            <strong>Step #1:</strong>
+            <p>
+              Download and install Helium viewer application in your computer.
+              <a href="<?php print $helium_resource['download']; ?>">&#xbb; Download and install Helium</a>
+            </p>
           </div>
 
           <div class="helium-exporter-show-steps-item">
-            <div>
-              <strong>Step #2:</strong>
-              <p>
-                Use the built-in data exporter below</br />to generate a data file.
-                <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to download data</a>
-              </p>
-            </div>
+            <img src="<?php print $path_module . '/theme/images/helium-export-step-02.gif'; ?>" alt="Step 02 : Export Data" title="Step 02 : Export Data" />
+            <strong>Step #2:</strong>
+            <p>
+              Use the built-in data exporter below to generate a data file.
+              <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to download data</a>
+            </p>
           </div>
+          
           <div class="helium-exporter-show-steps-item">
-            <div>
-              <strong>Step #3:</strong>
-              <p>
-                Load the data file generated in step #2<br />into Helium to visualize.
-                <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to load data into Helium</a>
-              </p>
-            </div>
+            <img src="<?php print $path_module . '/theme/images/helium-export-step-03.gif'; ?>" alt="Step 03 : Load Data" title="Step 03 : Load Data" />
+            <strong>Step #3:</strong>
+            <p>
+              Load the data file generated in step #2 into Helium to visualize.
+              <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to load data into Helium</a>
+            </p>
           </div>
-          <div class="helium-exporter-clear-float"></div>        
+          <div class="helium-exporter-clear-float"></div>                
         </div>
       </div>
       <div>
@@ -61,7 +58,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 
