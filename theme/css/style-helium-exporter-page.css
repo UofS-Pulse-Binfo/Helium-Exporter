@@ -110,8 +110,8 @@
 
 .helium-exporter-show-steps-item img {
   margin: 0 auto;
-  height: 100%;
-  width: 100%;;
+  height: 80%;
+  width: 80%;;
 }
 
 .helium-exporter-show-steps-item p {
@@ -130,7 +130,29 @@
   border-bottom: 4px dotted #EAEAEA; 
   left: 0; 
   position: absolute; 
-  top: 40px; 
+  top: 30%; 
   text-align: center;
   width: 100%; 
+}
+
+#helium-exporter-download-form select {
+  font-size: 1.1em;
+  width: 100%;
+}
+
+.helium-exporter-group-checkboxes-wrapper {
+  border: 1px solid #CCCCCC;
+  height: 170px;
+  margin: 0 0 15px 0;
+  padding: 5px 10px;
+  overflow-y: scroll;
+}
+
+.helium-exporter-group-checkboxes-wrapper label {
+  font-size: 1.1em;
+}
+
+.helium-exporter-field-options {
+  float: right;
+  font-weight: 100;
 }
