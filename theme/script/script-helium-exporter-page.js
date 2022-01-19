@@ -1,6 +1,7 @@
 /**
  * Export to data for Helium script.
  */
+
  (function ($) {
   Drupal.behaviors.heliumExporter = {
     attach: function (context, settings) {           
@@ -21,4 +22,21 @@
           slideWindow.slideUp(200);
         }
       });
+
+      // Listen to checkbox group field options select and deselect.
+      $('#helium-exporter-germplasm-options a, #helium-exporter-trait-options a')
+        .click(function(e) {
+          e.preventDefault();
+          var txt = $(this).text();
+          var relatedCheckboxes = $(this).parent().attr('id')
+            .replace('options', 'checkboxes');
+          
+          var setTo = (txt == 'Select All') ? true : false;  
+          
+          console.log(relatedCheckboxes);
+
+          $('#' + relatedCheckboxes + ' input').each(function() {
+            $(this).attr('checked', setTo);
+          });
+        });
 }};}(jQuery));

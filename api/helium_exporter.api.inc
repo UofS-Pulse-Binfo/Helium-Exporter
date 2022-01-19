@@ -30,7 +30,12 @@ function helium_exporter_get_experiments() {
     // Reset default and set it to the first experiment
     // in the list.
     $experiments_option = [];
-    $experiments_option = $experiments->fetchAllKeyed(0, 1);
+    foreach ($experiments as $exp) {
+      $has_data = helium_exporter_experiment_has_data($exp->project_id);
+      if ($has_data) {
+        $experiments_option[ $exp->project_id ] = $exp->name;
+      }
+    }
   }
   
   return $experiments_option;
@@ -47,6 +52,8 @@ function helium_exporter_get_experiments() {
  *   1 array - containing the traits
  *   both arrays as associative arrays where the key is the id (stock_id/cvterm_id)
  *   and value as stock name or cvterm name.
+ *   
+ *   Experiment name.
  */
 function helium_exporter_get_experiment_assets($experiment_id) {
   // Germplasm.
@@ -80,8 +87,34 @@ function helium_exporter_get_experiment_assets($experiment_id) {
     $trait_option = $traits->fetchAllKeyed(0, 1);
   }
 
+  // Which experiment assets belong to.
+  $experiment = chado_query("
+    SELECT name FROM {project} WHERE project_id = :experiment LIMIT 1
+  ", array(':experiment' => $experiment_id))
+    ->fetchField();
+
   return array(
+    'experiment' => $experiment,
     'germplasm' => $germplasm_option,
     'traits' => $trait_option
   );
+}
+
+/**
+ * Test to ensure that only experiment with data can be suggested to user.
+ * 
+ * @param $experiment
+ *   Integer, project_id (project tables).
+ * 
+ * @return boolean
+ *   True, experiment has data and false otherwise (exclude from list).
+ */
+function helium_exporter_experiment_has_data($experiment) {
+  // See if experiment has plant id (has data) at least one would suffice.
+  $data = chado_query("
+    SELECT plant_project_id FROM pheno_plant_project 
+    WHERE project_id = :experiment LIMIT 1
+  ", array(':experiment' => $experiment));
+
+  return ($data->rowCount() > 0) ? TRUE : FALSE;
 }

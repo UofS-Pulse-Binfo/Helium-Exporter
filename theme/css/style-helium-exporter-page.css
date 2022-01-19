@@ -142,6 +142,7 @@
 
 .helium-exporter-group-checkboxes-wrapper {
   border: 1px solid #CCCCCC;
+  font-family: Arial, Helvetica, sans-serif;
   height: 170px;
   margin: 0 0 15px 0;
   padding: 5px 10px;
@@ -150,9 +151,25 @@
 
 .helium-exporter-group-checkboxes-wrapper label {
   font-size: 1.1em;
+  display: inline-flex;
+  cursor: pointer;
+  width: 95%;
+}
+
+.helium-exporter-group-checkboxes-wrapper .form-item {
+  cursor: pointer;
+}
+
+.helium-exporter-group-checkboxes-wrapper .form-item:hover {
+  background-color: #F7F7F7;
 }
 
 .helium-exporter-field-options {
   float: right;
   font-weight: 100;
+}
+
+#helium-exporter-download-submit {
+  float: right;
+  margin-right: 0;
 }

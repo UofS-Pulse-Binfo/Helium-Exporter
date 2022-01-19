@@ -57,7 +57,7 @@
       <div id="helium-exporter-download-form">        
         <?php 
           // Render Helium Exporter Form:
-          print drupal_render($form['download_data']); 
+          print drupal_render_children($form); 
         ?>
       </div>
     </div>

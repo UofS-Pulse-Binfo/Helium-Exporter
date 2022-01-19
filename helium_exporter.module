@@ -12,13 +12,22 @@ module_load_include('inc', 'helium_exporter', 'api/helium_exporter.api');
   * Implements hook_menu().
   */
 function helium_exporter_menu() {
-  $items['data/export/helium'] = array(
+  $items['helium_exporter'] = array(
     'title' => t(''),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('helium_exporter_form'),
     'access arguments' => array('access helium_exporter'),
     'file' => 'includes/helium_exporter.form.inc',
     'type' => MENU_NORMAL_ITEM,
+  );
+
+  // Tripal Download Implementation.
+  $items['helium/exporter/download'] = array(
+    'title' => 'Helium Exporter Download',
+    'page callback' => 'trpdownload_download_page',
+    'page arguments' => array('helium_exporter_download'),
+    'access arguments' => array('access helium_exporter'),
+    'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -66,4 +75,96 @@ function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
     'information' => 'https://github.com/cardinalb/helium-docs/wiki',
     'help' => 'https://github.com/cardinalb/helium-docs/wiki/Data-Formats'
   );
+}
+
+// TRIPAL DOWNLOAD API IMPLEMENTATION
+
+/**
+ * Implements hook_register_tripaldownload_type().
+ */
+function helium_exporter_register_trpdownload_type() {
+  $types = array();
+
+  // The key is the machine name of my download type.
+  $types['helium_exporter_download'] = array(
+    // A human readable name to show in an administrative interface one day.
+    'type_name' => 'Helium Exporter Data Download',
+    // A human readable description of the format.
+    'format' => '',
+    // An array of functions that the API will use to customize your experience.
+    'functions' => array(
+      // The function that tripal jobs will call to generate the file.
+      'generate_file' => 'helium_exporter_trpdownload_generate_file',
+      // OPTIONAL: provide a summary to the user on the download page.
+      'summarize' => 'helium_exporter_trpdownload_summarize_download',
+      // OPTIONAL: determine your own filename.
+      'get_filename' => 'helium_exporter_trpdownload_get_filename',
+      // OPTIONAL: Change the file suffix (defaults to .txt)
+      'get_file_suffix' => 'helium_exporter_trpdownload_get_suffix',
+      // OPTIONAL: determine the human-readable format based on a function.
+      'get_format' => 'helium_exporter_trpdownload_get_readable_format',
+    ),
+  );
+
+  return $types;
+}
+
+/**
+ * Generate a readable and unique filename for the file to be generated.
+ */
+function helium_exporter_trpdownload_get_filename($vars) {
+  // Filename.
+  $filename = date('YMd') .'_'. time();
+
+  return $filename;
+}
+
+/**
+ * determine the human-readable format based on a function.
+ */
+function helium_exporter_trpdownload_get_readable_format($vars) {
+  $format = 'Tab Separated Values (.tsv)';
+  
+  return $format;
+}
+
+/**
+ * Determine the file suffix for the file to be generated.
+ */
+function helium_exporter_trpdownload_get_suffix($vars) {
+  return 'tsv';
+}
+
+
+/**
+ * Function callback: generate csv file.
+ */
+function helium_exporter_trpdownload_generate_file($vars, $job_id = NULL) {
+  // Use this character to separate entries in a string.
+  $delimiter = '+';
+
+  $code = '';
+  foreach($vars['q'] as $j => $m) {
+    if ($j == 'code') {
+      $code = $m;
+      break;
+    }
+  }
+  
+  $filename = $vars['filename'];
+
+  // Pedigree Input Format: This module uses Pedigree 3-Column Format
+  // https://github.com/cardinalb/helium-docs/wiki/Data-Formats.
+  // # heliumInput = PEDIGREE
+  // LineName FemaleParent  MaleParent
+  // ....
+
+  // Contain all rows to be written into file.
+  $row = [];
+  
+  // Meta information.
+  $row[0] = '# heliumInput = PEDIGREE : ' . $experiment; 
+
+
+
 }
