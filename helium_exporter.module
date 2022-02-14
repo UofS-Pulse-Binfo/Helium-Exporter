@@ -12,12 +12,23 @@ module_load_include('inc', 'helium_exporter', 'api/helium_exporter.api');
   * Implements hook_menu().
   */
 function helium_exporter_menu() {
+  // Download Data.
   $items['helium_exporter'] = array(
     'title' => t(''),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('helium_exporter_form'),
     'access arguments' => array('access helium_exporter'),
     'file' => 'includes/helium_exporter.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
+  // Configure Helium Exporter.
+  $items['admin/tripal/extension/helium_exporter/configure'] = array(
+    'title' => t('Helium Exporter Configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('helium_exporter_settings_form'),
+    'access arguments' => array('administer tripal'),
+    'file' => 'includes/helium_exporter_settings.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -66,6 +77,9 @@ function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
   // Attach script and style.
   drupal_add_css($path . '/theme/css/style-helium-exporter-page.css');    
   drupal_add_js($path . '/theme/script/script-helium-exporter-page.js', array('type' => 'file', 'scope' => 'footer'));
+  
+  // Attach library autocomplete:
+  drupal_add_library('system', 'ui.autocomplete');
 
   // Define template variables.
   $variables['path_module'] = $GLOBALS['base_url'] . '/' . $path;
@@ -114,7 +128,7 @@ function helium_exporter_register_trpdownload_type() {
  */
 function helium_exporter_trpdownload_get_filename($vars) {
   // Filename.
-  $filename = date('YMd') .'_'. time();
+  $filename = 'He_pedigree_' . date('YMd') .'_'. time();
 
   return $filename;
 }
@@ -123,7 +137,7 @@ function helium_exporter_trpdownload_get_filename($vars) {
  * determine the human-readable format based on a function.
  */
 function helium_exporter_trpdownload_get_readable_format($vars) {
-  $format = 'Tab Separated Values (.tsv)';
+  $format = 'Helium (.helium)';
   
   return $format;
 }
@@ -132,12 +146,65 @@ function helium_exporter_trpdownload_get_readable_format($vars) {
  * Determine the file suffix for the file to be generated.
  */
 function helium_exporter_trpdownload_get_suffix($vars) {
-  return 'tsv';
+  return 'helium';
 }
 
+/**
+ * Create summary.
+ */
+function helium_exporter_trpdownload_summarize_download($vars) { 
+  $code = '';
+  foreach($vars['q'] as $j => $m) {
+    if ($j == 'code') {
+      $code = $m;
+      break;
+    }
+  }
+  
+  $filename = $vars['filename'];
+  $code = base64_decode($code);
+  parse_str($code, $values);
+
+  $path = sys_get_temp_dir() . '/';
+  $He_file =  $path . $values['he'];
+  $querystring = file_get_contents($He_file);
+  unset($values);
+  parse_str($querystring, $values);
+
+  $path = variable_get('trpdownload_relpath');
+  $file_link = l($values['f'], file_create_url($path) .  '/' . $values['f'], 
+    array('attributes' => array('target' => '_blank', 'download' => $values['f']))
+  );
+
+  $file_icon = theme_image(array(
+    'path' => drupal_get_path('module','trpdownload_api').'/theme/icons/file_generic.128.png',
+    'alt' => 'download environment data file',
+    'attributes' => array()
+  ));
+
+  $output = '<div style="position: absolute; left: 0; width: 100%; margin-top: 90px; padding: 10px;">
+    <div style="margin: 0 20px 0 0;">
+      <div class="download-pane" style="margin: 0 20px;">'
+
+       . $file_icon .
+
+       '<div class="inner-pane file">
+          <h2>File:</h2>
+          <div class="file-link">' . $file_link . '</div>
+          <div class="file-format">Format: Helium (.helium)</div>
+        </div>
+      </div>
+    </div>
+  </div>';
+
+  // Link to download a different set.
+  $exporter = l('Go back Helium Exporter', '/helium_exporter');
+
+  return 'Download Pedigree and Categorical Data <br />' . $exporter . $output;
+}
 
 /**
- * Function callback: generate csv file.
+ * Function callback: generate .helum file.
  */
 function helium_exporter_trpdownload_generate_file($vars, $job_id = NULL) {
   // Use this character to separate entries in a string.
@@ -151,20 +218,67 @@ function helium_exporter_trpdownload_generate_file($vars, $job_id = NULL) {
     }
   }
   
-  $filename = $vars['filename'];
+  // User selected values parsed from the querystring.
+  $code = base64_decode($code);
+  parse_str($code, $values);
 
-  // Pedigree Input Format: This module uses Pedigree 3-Column Format
-  // https://github.com/cardinalb/helium-docs/wiki/Data-Formats.
-  // # heliumInput = PEDIGREE
-  // LineName FemaleParent  MaleParent
-  // ....
+  $path = sys_get_temp_dir() . '/';
+  $He_file =  $path . $values['he'];
+  $querystring = file_get_contents($He_file);
+  unset($values);
 
-  // Contain all rows to be written into file.
-  $row = [];
+  parse_str($querystring, $values);
   
-  // Meta information.
-  $row[0] = '# heliumInput = PEDIGREE : ' . $experiment; 
+  $experiment = $values['e'];
+  // Get experiment assets to match traits and germplasm only
+  // belonging to the same experiment.
+  $experiment_assets = helium_exporter_get_experiment_assets($experiment);
+  // Germplasm and traits selected.
+  $germplasm  = explode(' ', $values['g']);
+  $traits     = explode(' ', $values['t']);
+  // Source directory for files.
+  $path_tripal_download = variable_get('trpdownload_fullpath');
+  // Lineage option.
+  $lineage = $values['l'];
+  
+  // PEDIGREE:
+  $file_pedigree = $path_tripal_download . $vars['filename'];
+  $FILE = fopen($file_pedigree, 'w') or die ('Unable to read file to write pedigree to.');
+  
+  // Write metadata about this file in the header followed
+  // by column headers.
+  $header = '# heliumInput = PEDIGREE : ' . $experiment_assets['experiment'];
+  fwrite($FILE, $header . "\n");
+  fputcsv($FILE, array('LineName', 'Parent', 'ParentType'), "\t");
+  
+  // Datapoints that will map to every column headers.
+  // For each germplasm selected, fetch pedigree information.
+  $rows = [];
+  foreach($germplasm as $line) {
+    // Get selections of etc. and parents.
+    $relations = helium_exporter_get_parents($line, $lineage);
+    foreach($relations as $rel) {
+      fputcsv($FILE, $rel, "\t");
+    }
+  }
+  
+  fclose($FILE); 
 
+  // CATEGORICAL/PHENOTYPES:
+  $file_phenotypes = file_create_url($path_tripal_download . $values['f']);
+  $FILE = fopen($file_phenotypes, 'w') or die ('Unable to read file to write phenotypes to.');
+  
+  // Write metadata about this file in the header followed
+  // by column headers.
+  $header = '# heliumInput = PHENOTYPE : ' . $experiment_assets['experiment'];
+  fwrite($FILE, $header . "\n");
+  $phenotypes = helium_exporter_get_phenotypes($experiment, $traits, $germplasm);
+  if ($phenotypes) {
+    fputcsv($FILE, $phenotypes['headers'], "\t");
+    foreach($phenotypes['rows'] as $data) {
+      fputcsv($FILE, $data, "\t");
+    }
+  }
 
-
+  fclose($FILE); 
 }

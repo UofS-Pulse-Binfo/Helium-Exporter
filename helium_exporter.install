@@ -5,3 +5,13 @@
  * Contains all schema api and hook_install()/hook_uninstall()
  * implementations required by this module.
  */
+
+/**
+ * Implements hook_enable().
+ */
+function helium_exporter_enable() {
+  // Create a system variable to hold settings
+  // for Subject and Object (cterms) to use when 
+  // creating pedigree tree.
+  variable_set('helium_exporter_pedigree_relations', 0);
+}

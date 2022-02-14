@@ -1,0 +1,26 @@
+/**
+ * @file
+ * Settings page CSS file.
+ */
+
+.helium-exporter-configuration {
+  border: 1px solid #EAEAEA; 
+  padding: 15px; 
+  position: relative;
+  margin: 20px 0 20px 0;
+}
+
+.helium-exporter-settings-diagram {
+  float: left; 
+  width: 290px;
+  margin: 0 30px 0 0;
+}
+
+.helium-exporter-settings-field {
+  float: left; 
+  width: 60%
+}
+
+.helium-exporter-clear-float {
+  clear: both;
+}

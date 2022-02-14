@@ -5,7 +5,7 @@
  */
 ?>
 
-<div id="helium-exporter-contariner">
+<div id="helium-exporter-contariner" style="max-width: 900px">
   <div id="helium-exporter-header">  
     <div id="helium-exporter-title">Data Exporter for Helium</div>
     <div id="helium-exporter-help">
@@ -22,7 +22,7 @@
       </p>
       
       <div id="helium-exporter-show-window">
-        <div id="helium-exporter-bg-line">...</div>
+        <div id="helium-exporter-bg-line"></div>
         <div id="helium-exporter-show-steps">
           <div class="helium-exporter-show-steps-item">
             <img src="<?php print $path_module . '/theme/images/helium-export-step-01.gif'; ?>" style="border: none" alt="Step 01 : Install" title="Step 01 : Install" />
@@ -61,6 +61,12 @@
         ?>
       </div>
     </div>
+  </div>
+
+  <div id="helium-exporter-citation">
+    Helium: Visualization of Large Scale Plant Pedigrees.<br />
+    Shaw, P.D., Kennedy, J., Graham, M., Milne, I. and Marshall, D.F. 2014.<br /> 
+    BMC Bioinformatics. 15:259. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259" target="_blank">DOI: 10.1186/1471-2105-15-259</a>
   </div>
 </div>
 

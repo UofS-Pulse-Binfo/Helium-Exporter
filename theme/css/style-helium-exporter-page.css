@@ -130,7 +130,7 @@
   border-bottom: 4px dotted #EAEAEA; 
   left: 0; 
   position: absolute; 
-  top: 30%; 
+  top: 80px; 
   text-align: center;
   width: 100%; 
 }
@@ -140,36 +140,148 @@
   width: 100%;
 }
 
-.helium-exporter-group-checkboxes-wrapper {
-  border: 1px solid #CCCCCC;
-  font-family: Arial, Helvetica, sans-serif;
-  height: 170px;
-  margin: 0 0 15px 0;
-  padding: 5px 10px;
-  overflow-y: scroll;
+#helium-exporter-download-submit {
+  float: right;
+  margin-right: 0;
 }
 
-.helium-exporter-group-checkboxes-wrapper label {
-  font-size: 1.1em;
-  display: inline-flex;
-  cursor: pointer;
-  width: 95%;
+#helium-exporter-full-lineage {
+  background: url(../images/full-lineage.jpg) no-repeat;
+  position: absolute;
+  right: 0;
+  padding-left: 35px;
+  margin-top: 5px;
+  margin-right: 170px;
 }
 
-.helium-exporter-group-checkboxes-wrapper .form-item {
-  cursor: pointer;
+#helium-exporter-citation {
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 0.8em;
+  margin: 20px 0 0 0;
+  opacity: 0.8;
 }
 
-.helium-exporter-group-checkboxes-wrapper .form-item:hover {
-  background-color: #F7F7F7;
-}
-
+/* Custom checkboxes */
 .helium-exporter-field-options {
   float: right;
   font-weight: 100;
 }
 
-#helium-exporter-download-submit {
-  float: right;
-  margin-right: 0;
+  .helium-exporter-field-options a:first-child {
+    padding-left: 17px;
+    padding-right: 3px;
+    background: url(../images/search.png) no-repeat left center;
+    background-size: 13px 16px;
+  }
+
+  .helium-exporter-field-options a:last-child {
+    padding-left: 22px;
+  }
+
+.helium-exporter-custom-checkbox {
+  position: relative;
+  display: block;
+  border: 1px solid #CCCCCC;
+  border-top-width: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 170px;
+  margin: 5px 0 15px 0;
+  padding: 5px 10px;
+  overflow-y: scroll;
 }
+
+.helium-exporter-custom-checkbox ul {
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.helium-exporter-custom-checkbox ul li {
+  background-color: #FFFFFF;
+  padding: 2px 0 2px 30px !important;
+  cursor: pointer;
+}
+
+  .helium-exporter-custom-checkbox ul li span {
+    border: 1px solid #FFFFFF;
+    background-color: #FFFFFF;
+    height: 12px;
+    left: 0; 
+    position: absolute;
+    margin: 4px 0 0 15px;    
+    width: 12px; 
+  }
+
+    .helium-exporter-custom-checkbox ul li span div {
+      display: block;
+      background: #3A7F21;
+      border: 1px solid #314355;
+      border-radius: 50%;
+      height: 11px;
+      width: 11px;
+      margin: 0;
+    }
+
+.helium-exporter-custom-checkbox ul li:hover {
+  background-color: #F7F7F7;
+
+  -webkit-transition: background-color 0.9s ease-out;
+  -moz-transition: background-color 0.9s ease-out;
+  -o-transition: background-color 0.9s ease-out;
+  transition: background-color 0.9s ease-out;
+}
+
+.helium-exporter-item-check {
+  background: url(../images/check.png) no-repeat 5px center;
+}
+
+.helium-exporter-item-uncheck {
+  background: url(../images/uncheck.png) no-repeat 5px center;
+}
+
+.helium-exporter-custom-checkbox-search {
+  display: none;
+  background-color: #EAEAEA;
+  height: 60px;
+  margin-top: 10px; 
+  padding-left: 20px; 
+  position: absolute;
+  right: 48px;  
+  width: 160px; 
+  z-index: 1;
+
+  -moz-box-shadow:    1px 1px 5px 1px #CCCCCC;
+  -webkit-box-shadow: 1px 1px 5px 1px #CCCCCC;
+  box-shadow:         outset 1px 1px 5px 1px #CCCCCC;
+}
+
+.helium-exporter-custom-checkbox-search::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #EAEAEA transparent;
+}
+
+.helium-exporter-custom-checkbox-search input {
+  font-weight: 300; 
+  font-size: 0.7em; 
+  padding: 2px !important; 
+  margin: 10px 0 5px 0 !important;
+}
+
+.helium-exporter-custom-checkbox-search a {
+  font-size: 0.9em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+.ui-autocomplete {
+  font-family:Arial, Helvetica, sans-serif !important;
+  font-size: 0.8em !important;
+}
+
+
