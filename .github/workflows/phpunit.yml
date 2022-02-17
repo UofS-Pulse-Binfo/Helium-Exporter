@@ -21,7 +21,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:10.10
+        image: postgres:11.12
         env:
           POSTGRES_USER: tripaladmin
           POSTGRES_PASSWORD: somesupersecurepassword
@@ -152,4 +152,5 @@ jobs:
       run: |
         cd $DRUPAL_ROOT/sites/all/modules/helium_exporter
         composer require --dev mheap/phpunit-github-actions-printer --quiet
+        composer update --quiet
         ./vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
