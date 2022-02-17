@@ -120,8 +120,8 @@ jobs:
         DRUSH: ${{ steps.tripalsetup.outputs.drush_path }}
         DRUPAL_ROOT: ${{ steps.tripalsetup.outputs.drupal_root }}
       run: |
-        mkdir -p $DRUPAL_ROOT/sites/all/modules/rawphenotypes
-        cp -R * $DRUPAL_ROOT/sites/all/modules/rawphenotypes
+        cd $DRUPAL_ROOT/sites/all/modules
+        git clone https://github.com/tripal/rawphenotypes.git
         cd $DRUPAL_ROOT/sites/all/libraries/spreadsheet-reader
         git apply $DRUPAL_ROOT/sites/all/modules/rawphenotypes/spreadsheet-reader.patch
     # 6-a) Enable Raw Phenotypes
