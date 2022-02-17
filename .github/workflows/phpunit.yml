@@ -152,5 +152,3 @@ jobs:
       run: |
         cd $DRUPAL_ROOT/sites/all/modules/helium_exporter
         composer require --dev mheap/phpunit-github-actions-printer --quiet
-        composer update --quiet
-        ./vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
