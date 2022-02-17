@@ -151,4 +151,4 @@ jobs:
         DRUPAL_ROOT: ${{ steps.tripalsetup.outputs.drupal_root }}
       run: |
         cd $DRUPAL_ROOT/sites/all/modules/helium_exporter
-        ./vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
+        ./vendor/bin/phpunit
