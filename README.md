@@ -12,7 +12,7 @@ Helium Exporter for Helium Pedigree Visualization Framework is custom data expor
 ## Installation
 1. Install all dependencies (please note to install all dependencies directly related to RAWPHENOTEYPES MODULE)
 2. Install and enable this module as you would any other Drupal Module.
-3. Configure module. Link to configuratino page is displayed next to the enabled module in the modules page.
+3. Configure module. Link to configuration page is displayed next to the enabled module in the modules page.
 
 ## Citation
 Helium Pedigree Visualization Framework: Shaw, P.D., Kennedy, J., Graham, M., Milne, I. and Marshall, D.F. 2014. Helium: Visualization of Large Scale Plant Pedigrees. BMC Bioinformatics. 15:259. [DOI: 10.1186/1471-2105-15-259](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259)
