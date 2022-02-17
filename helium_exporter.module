@@ -13,7 +13,7 @@ module_load_include('inc', 'helium_exporter', 'api/helium_exporter.api');
   */
 function helium_exporter_menu() {
   // Download Data.
-  $items['helium_exporter'] = array(
+  $items['helium-exporter'] = array(
     'title' => t(''),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('helium_exporter_form'),
@@ -83,6 +83,10 @@ function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
 
   // Define template variables.
   $variables['path_module'] = $GLOBALS['base_url'] . '/' . $path;
+
+  $config = variable_get('helium_exporter_pedigree_relations');
+  $is_configured = ($config == '0') ? FALSE : TRUE;
+  $variables['is_configured'] = $is_configured; 
 
   $variables['helium_resource'] = array(
     'download' => 'https://github.com/cardinalb/helium-docs/wiki/Download-Helium',
@@ -161,7 +165,6 @@ function helium_exporter_trpdownload_summarize_download($vars) {
     }
   }
   
-  $filename = $vars['filename'];
   $code = base64_decode($code);
   parse_str($code, $values);
 
@@ -198,7 +201,7 @@ function helium_exporter_trpdownload_summarize_download($vars) {
   </div>';
 
   // Link to download a different set.
-  $exporter = l('Go back Helium Exporter', '/helium_exporter');
+  $exporter = l('Go back Helium Exporter', '/helium-exporter');
 
   return 'Download Pedigree and Categorical Data <br />' . $exporter . $output;
 }

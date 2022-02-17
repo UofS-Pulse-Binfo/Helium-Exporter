@@ -63,14 +63,14 @@ function helium_exporter_form($form, &$form_state) {
       
       // Custom checkbox components: Title/Options/Search Window/Checkboxes
       $markup = '
-        <strong>%s:</strong> %d Found
+        <strong>%s:</strong> %d <span class="helium-exporter-selections"></span>
         <span class="helium-exporter-field-options">
           <a href="#" alt="Search a value" title="Search a value">Search</a> | 
           <a class="helium-exporter-item-check" href="#" alt="Select or deselect all options" title="Select or deselect all options">All</a>
         </span>
         <div class="helium-exporter-custom-checkbox-search">
           <input type="text" value="">
-          <a href="#" alt="Close search window" title="Close search window">Close</a>
+          <a href="#" alt="Close search window" title="Close search window">Close</a> | <a href="#" alt="Select value" title="Select value">Select value</a>
         </div>
         <div class="helium-exporter-custom-checkbox">
           %s

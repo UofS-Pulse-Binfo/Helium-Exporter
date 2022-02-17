@@ -16,6 +16,12 @@ function helium_exporter_settings_form($form, &$form_state) {
 
   // Get all relationship types, becomes select option in the following fields.
   $relations = helium_exporter_get_relationship_types();
+  if (!$relations) {
+    drupal_set_message('No vocabulary terms used for germplasm relationship found. 
+      Please create terms used to define germplasm relationships in your site.', 'warning');
+    return $form;
+  }
+
   $form_state['relationships'] = $relations;
 
   // Images of subject/object.  
@@ -25,7 +31,7 @@ function helium_exporter_settings_form($form, &$form_state) {
   // Inspect configuration and instruct admin to set a value when
   // this is still set to 0 (0 by default).
   $default_rels = variable_get('helium_exporter_pedigree_relations');
-  $default_rels = unserialize($default_rels);
+  $default_rels = ($default_rels) ? unserialize($default_rels) : 0;
 
   if ($default_rels == 0) {
     drupal_set_message('Please set all configuration for this module.', 'warning');
@@ -68,13 +74,14 @@ function helium_exporter_settings_form($form, &$form_state) {
       <img src="' . $pedigree_img_subject  . '" heigth="155" width="280" />
     </div>'
   );
-
+  
+  $default_object = isset($default_rels['object']) ? array_keys($default_rels['object']) : [];
   $form['configure']['pedigree_subject']['container']['field_object'] = array(
     '#type' => 'select',
     '#title' => t('Subject is Parent'),
     '#options' => $relations,
     '#multiple' => TRUE,
-    '#default_value' => array_keys($default_rels['object']),
+    '#default_value' => $default_object,
     '#description' => 'Select the relationships below where the parent-side of the relationship 
       is the subject. This will put the subject higher in the tree than the 
       object, as shown in the digram above.',
@@ -95,12 +102,13 @@ function helium_exporter_settings_form($form, &$form_state) {
     </div>'
   );
 
+  $default_subject = isset($default_rels['subject']) ? array_keys($default_rels['subject']) : [];
   $form['configure']['pedigree_object']['container']['field_subject'] = array(
     '#type' => 'select',
     '#title' => t('Object is Parent'),
     '#options' => $relations,
     '#multiple' => TRUE,
-    '#default_value' => array_keys($default_rels['subject']),
+    '#default_value' => $default_subject,
     '#description' => 'Select the relationships below where the parent-side of the relationship 
       is the object. This will put the object higher in the tree than the 
       subject, as shown in the digram above.',
@@ -116,18 +124,20 @@ function helium_exporter_settings_form($form, &$form_state) {
     '#suffix' => '</div>'
   );
 
+  $default_maternal = isset($default_rels['maternal']) ? $default_rels['maternal'] : 0;
   $form['configure']['terms_parents']['container']['field_term_maternal'] = array(
     '#type' => 'select',
     '#title' => t('Select term used to identify maternal parent'),
     '#options' => $relations,
-    '#default_value' => $default_rels['maternal'],
+    '#default_value' => $default_maternal,
   );
-
+  
+  $default_paternal = isset($default_rels['paternal']) ? $default_rels['paternal'] : 0;
   $form['configure']['terms_parents']['container']['field_term_paternal'] = array(
     '#type' => 'select',
     '#title' => t('Select term used to identify paternal parent'),
     '#options' => $relations,
-    '#default_value' => $default_rels['paternal'],
+    '#default_value' => $default_paternal,
   );
 
 
@@ -181,22 +191,16 @@ function helium_exporter_settings_form_validate($form, $form_state) {
  * Implements hook_form_submit().
  */
 function helium_exporter_settings_form_submit($form, $form_state) {
-  if ($form_state['values']['field_subject'] && $form_state['values']['field_object']
-     && $form_state['values']['field_term_maternal'] && $form_state['values']['field_term_paternal']) {
-    // Use form values set by administrator.
-    $object_rels = array_intersect_key($form_state['relationships'], $form_state['values']['field_object']);
-    $subject_rels = array_intersect_key($form_state['relationships'], $form_state['values']['field_subject']);
+  // Use form values set by administrator.
+  $object_rels = array_intersect_key($form_state['relationships'], $form_state['values']['field_object']);
+  $subject_rels = array_intersect_key($form_state['relationships'], $form_state['values']['field_subject']);
 
-    $rels = array(
-      'maternal' => $form_state['values']['field_term_maternal'],
-      'paternal' => $form_state['values']['field_term_paternal'],
-      'object' => $object_rels,
-      'subject' => $subject_rels
-    );
+  $rels = array(
+    'maternal' => $form_state['values']['field_term_maternal'],
+    'paternal' => $form_state['values']['field_term_paternal'],
+    'object' => $object_rels,
+    'subject' => $subject_rels
+  );
   
-    variable_set('helium_exporter_pedigree_relations', serialize($rels));
-  }
-  else {
-    variable_set('helium_exporter_pedigree_relations', 0);
-  }
+  variable_set('helium_exporter_pedigree_relations', serialize($rels));
 }

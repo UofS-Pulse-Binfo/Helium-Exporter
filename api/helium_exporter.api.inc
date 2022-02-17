@@ -93,13 +93,11 @@ function helium_exporter_get_experiment_assets($experiment_id) {
   ", array(':experiment' => $experiment_id))
     ->fetchField();
 
-  return 
-    array(
-      'experiment' => $experiment,
-      'germplasm' => $germplasm_option,
-      'traits' => $trait_option
-    );
-  
+  return array(
+    'experiment' => $experiment,
+    'germplasm' => $germplasm_option,
+    'traits' => $trait_option
+  );
 }
 
 /**
@@ -129,6 +127,7 @@ function helium_exporter_experiment_has_data($experiment) {
  * @param $lineage
  *   Boolean true or false, true indicates to include
  *   selection of aside from maternal and paternal information.
+ *   True - only parentage relationship information.
  * 
  * @return array
  *   Associative array where keys are mother and father corresponding to 
@@ -150,7 +149,7 @@ function helium_exporter_get_parents($germplasm, $lineage = 0) {
   $subject_relations = "
     WITH RECURSIVE relations AS (      
       SELECT 
-        1 AS level, name AS subject_name, stock_id AS subject_id, 1 AS type, 
+        1 AS level, name AS subject_name, stock_id AS subject_id, 1::bigint AS type, 
         name AS object_name, stock_id AS object_id
       FROM {stock} WHERE stock_id = :germplasm
     
@@ -250,19 +249,6 @@ function helium_exporter_get_germplasm($germplasm) {
 }
 
 /**
- * Get stock relationships
- */
-function helium_exporter_get_relationship($germplasm) {
-  $relations = chado_query("
-    SELECT rel.subject_id, rel.type_id, cvterm.name as type, rel.object_id 
-    FROM {stock_relationship} AS rel LEFT JOIN {cvterm} ON cvterm_id = rel.type_id
-    WHERE rel.subject_id = :germplasm OR rel.object_id = :germplasm
-  ", array(':germplasm' => $germplasm));
-
-  return ($relations->rowCount() > 0) ? $relations->fetchAll() : 0;
-}
-
-/**
  * Get relationship types.
  * 
  * @return array
@@ -291,6 +277,9 @@ function helium_exporter_get_relationship_types() {
 
 /**
  * Get configuration settings for subject and object.
+ * 
+ * @return array
+ *   Configuration values for maternal, paternal, subject and object.
  */
 function helium_exporter_get_configuration() {
   $relations = variable_get('helium_exporter_pedigree_relations');
@@ -300,7 +289,18 @@ function helium_exporter_get_configuration() {
 }
 
 /**
- * Get phenotypes.
+ * Get categorical values.
+ * 
+ * @param experiment
+ *   Integer, project_id numnber of project table. 
+ * @param $traits
+ *   Array, all phenotypic values will be based on all traits specific to experiment.
+ * @param $germplasm
+ *   Array, All phenotypic values will be based on all germplasm specific to experiment.
+ * 
+ * @return array
+ *   Key: Headers - all traits
+ *   Key: Rows    - all phenotypic values for a trait with each value matching the column in Headers.
  */
 function helium_exporter_get_phenotypes($experiment, $traits, $germplasm) {
   // Add these two traits into the official traits selected by user.
@@ -314,7 +314,7 @@ function helium_exporter_get_phenotypes($experiment, $traits, $germplasm) {
   $trait = array_merge($traits, $more_trait);
   
   $filter_sql = " (
-    SELECT plant_id FROM {pheno_plant} WHERE stock_id IN (:germplasm) AND plant_id IN (
+    SELECT plant_id FROM pheno_plant WHERE stock_id IN (:germplasm) AND plant_id IN (
       SELECT plant_id FROM pheno_plant_project WHERE project_id = :experiment
     )
   ) ";
@@ -324,7 +324,7 @@ function helium_exporter_get_phenotypes($experiment, $traits, $germplasm) {
   $filter_args[':traits'] = $traits;
   $tmp_headers = chado_query("
     SELECT 'C' || t2.cvterm_id AS id, t2.name
-    FROM {pheno_measurements} t1 LEFT JOIN chado.cvterm t2 ON t2.cvterm_id=t1.type_id
+    FROM pheno_measurements t1 LEFT JOIN chado.cvterm t2 ON t2.cvterm_id=t1.type_id
     WHERE t2.cvterm_id IN (:traits) AND t1.plant_id IN" . $filter_sql . "
     GROUP BY t2.cvterm_id, t2.definition
   ", $filter_args);

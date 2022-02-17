@@ -36,6 +36,12 @@
         $(this).find('li').each(function() {
           searchOptions[ setId ].push($(this).text());
         });
+
+        // Always start with a empty selections.
+        $(this).find('input[type = hidden]').val('');
+
+        // Selections reset.
+        $('.helium-exporter-selections').text();
       });
 
       // CUSTOM CHECKBOX:
@@ -166,13 +172,45 @@
         });
       //
 
-      // Add event listener to close search window.
+      // Add event listener search window links.
       $('.helium-exporter-custom-checkbox-search a')
         .click(function(e) {
           e.preventDefault();
-          $(this)
-            .parent().fadeOut('fast')
-            .find('input').val('');
+
+          var txt = $(this).text();
+          if (txt.toLowerCase() == 'close') {
+            // Close window.
+            $(this)
+              .parent().fadeOut('fast')
+              .find('input').val('');
+
+            $('#' + searchId)
+              .find('.helium-exporter-custom-checkbox')
+              .scrollTop(-1);  
+          }
+          else {
+            // Select value.
+            var searchField = $('#' + searchId)
+              .find('input[type = text]');
+           
+            if (searchField.val()) {
+              var optionIndex = searchOptions[ searchId ]
+                .indexOf(searchField.val().trim());
+              
+              $('#' + searchId)
+                .find('.helium-exporter-custom-checkbox')
+                .find('li').eq(optionIndex)
+                .removeClass(checkState.off).addClass(checkState.on);
+              
+              var i = checkTable[ searchId ].indexOf(optionIndex);
+              if (i < 0) {    
+                checkTable[ searchId ].push(optionIndex);                      
+                customCheckboxSave(searchId, checkTable[ searchId ]);
+
+                searchField.val('');
+              }
+            }  
+          }
         });
       //
 
@@ -182,6 +220,10 @@
           if ($(this).val()) {
             $(this).select();
           }
+
+          $('#' + searchId)
+            .find('.helium-exporter-custom-checkbox')
+            .scrollTop(-1);
         });
       //  
 
@@ -215,9 +257,7 @@
                 }
 
                 t++;
-              }, 300);
-
-              $(this).parent().fadeOut('slow');
+              }, 250);
             },
             source: function(request, response) {
               // Search options:
@@ -245,9 +285,8 @@
        * @param items
        *   Items selected/check to save.
        */
-      function customCheckboxSave(customCheckboxSet, items) {
-        // Add event listener to submit button - ensure selection made.
-        var submit = $('#helium-exporter-download-submit');
+      function customCheckboxSave(customCheckboxSet, items) {      
+        var selectionsCount = '';
 
         // Reset field each time before applying recent selections.
         var selectionsField = $('#' + customCheckboxSet).find('input[type = hidden]');
@@ -259,7 +298,12 @@
           items.sort();
           
           selectionsField.val(JSON.stringify(items));
+          selectionsCount = '/ ' + items.length + ' Selections';
         }
+        
+        // Reflect number of selections.
+        $('#' + customCheckboxSet)
+          .find('.helium-exporter-selections').text(selectionsCount);
       }
 
       /**

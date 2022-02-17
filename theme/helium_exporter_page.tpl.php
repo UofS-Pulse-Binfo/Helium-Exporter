@@ -38,7 +38,7 @@
             <strong>Step #2:</strong>
             <p>
               Use the built-in data exporter below to generate a data file. Click the link below for guide on using the exporter.
-              <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to download data</a>
+              <a href="#">&#xbb; How to download data</a>
             </p>
           </div>
           
@@ -46,8 +46,8 @@
             <img src="<?php print $path_module . '/theme/images/helium-export-step-03.gif'; ?>" style="border: none" alt="Step 03 : Load Data" title="Step 03 : Load Data" />
             <strong>Step #3:</strong>
             <p>
-              Load the data file generated in step #2 into Helium to visualize. Click the link below to explore Helium and how to use.
-              <a href="<?php print $helium_resource['download']; ?>">&#xbb; How to load data into Helium</a>
+              Load the data file generated in step #2 into Helium to visualize. Click the link below to explore and how to use Helium.
+              <a href="#">&#xbb; How to load data into Helium</a>
             </p>
           </div>
           <div class="helium-exporter-clear-float"></div>                
@@ -56,8 +56,13 @@
 
       <div id="helium-exporter-download-form">        
         <?php 
-          // Render Helium Exporter Form:
-          print drupal_render_children($form); 
+          if ($is_configured) {
+            // Render Helium Exporter Form:
+            print drupal_render_children($form); 
+          }
+          else {
+            drupal_set_message('Helium Exporter module is not configured. Please contact administrator.', 'warning');
+          }
         ?>
       </div>
     </div>
