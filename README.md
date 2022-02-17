@@ -15,4 +15,4 @@ Helium Exporter for Helium Pedigree Visualization Framework is custom data expor
 3. Configure module. Link to configuratino page is displayed next to the enabled module in the modules page.
 
 ## Citation
-Helium Pedigree Visualization Framework: Shaw, P.D., Kennedy, J., Graham, M., Milne, I. and Marshall, D.F. 2014. Helium: Visualization of Large Scale Plant Pedigrees. BMC Bioinformatics. 15:259. DOI: 10.1186/1471-2105-15-259
+Helium Pedigree Visualization Framework: Shaw, P.D., Kennedy, J., Graham, M., Milne, I. and Marshall, D.F. 2014. Helium: Visualization of Large Scale Plant Pedigrees. BMC Bioinformatics. 15:259. [DOI: 10.1186/1471-2105-15-259](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259)
