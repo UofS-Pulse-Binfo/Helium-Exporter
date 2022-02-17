@@ -121,7 +121,7 @@ jobs:
         DRUPAL_ROOT: ${{ steps.tripalsetup.outputs.drupal_root }}
       run: |
         cd $DRUPAL_ROOT/sites/all/modules
-        git clone https://github.com/tripal/rawphenotypes.git
+        git clone https://github.com/UofS-Pulse-Binfo/rawphenotypes.git
         cd $DRUPAL_ROOT/sites/all/libraries/spreadsheet-reader
         git apply $DRUPAL_ROOT/sites/all/modules/rawphenotypes/spreadsheet-reader.patch
     # 6-a) Enable Raw Phenotypes
