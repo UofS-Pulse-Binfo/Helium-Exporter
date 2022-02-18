@@ -11,9 +11,14 @@ Helium Exporter for Helium Pedigree Visualization Framework is custom data expor
 3. [Raw Phenotypes Module](https://github.com/UofS-Pulse-Binfo/rawphenotypes)
 
 ## Installation
+Exporter
 1. Install all dependencies (please note to install all dependencies directly related to RAWPHENOTEYPES MODULE)
 2. Install and enable this module as you would any other Drupal Module.
 3. Configure module. Link to configuration page is displayed next to the enabled module in the modules page.
+
+Helium
+
+1. Please clink [Helium Docs](https://github.com/cardinalb/helium-docs/wiki/Download-Helium) to install Helium in your local computer.
 
 ## Export and Visualize Pedigree
 ![steps to visualize](https://user-images.githubusercontent.com/15472253/154708936-cc6e2705-86e2-4dcc-bf5e-54756a82cb4e.png)
