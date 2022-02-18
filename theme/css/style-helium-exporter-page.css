@@ -267,10 +267,12 @@
 }
 
 .helium-exporter-custom-checkbox-search input {
+  display: block;
   font-weight: 300; 
   font-size: 0.7em; 
   padding: 2px !important; 
   margin: 10px 0 5px 0 !important;
+  width: 80%;
 }
 
 .helium-exporter-custom-checkbox-search a {
