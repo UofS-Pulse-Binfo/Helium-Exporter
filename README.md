@@ -14,5 +14,9 @@ Helium Exporter for Helium Pedigree Visualization Framework is custom data expor
 2. Install and enable this module as you would any other Drupal Module.
 3. Configure module. Link to configuration page is displayed next to the enabled module in the modules page.
 
+## Export and Visualize Pedigree
+![steps to visualize](https://user-images.githubusercontent.com/15472253/154708936-cc6e2705-86e2-4dcc-bf5e-54756a82cb4e.png)
+
+
 ## Citation
 Helium Pedigree Visualization Framework: Shaw, P.D., Kennedy, J., Graham, M., Milne, I. and Marshall, D.F. 2014. Helium: Visualization of Large Scale Plant Pedigrees. BMC Bioinformatics. 15:259. [DOI: 10.1186/1471-2105-15-259](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259)
