@@ -151,6 +151,5 @@ jobs:
         DRUPAL_ROOT: ${{ steps.tripalsetup.outputs.drupal_root }}
       run: |
         cd $DRUPAL_ROOT/sites/all/modules/helium_exporter
-        composer require --dev mheap/phpunit-github-actions-printer --quiet
-        composer update --no-dev
-        ./vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
+        composer require --dev mheap/phpunit-github-actions-printer 
+        ./vendor/bin/phpunit 
