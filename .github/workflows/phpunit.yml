@@ -152,4 +152,5 @@ jobs:
       run: |
         cd $DRUPAL_ROOT/sites/all/modules/helium_exporter
         composer require --dev mheap/phpunit-github-actions-printer
+        composer update --quiet
         ./vendor/bin/phpunit 
