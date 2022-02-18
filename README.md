@@ -1,5 +1,6 @@
 # Helium-Exporter
-![exporter-he](https://user-images.githubusercontent.com/15472253/154566046-b230d1da-f9b1-4eca-b24f-a59b8b94308f.png)
+
+![banner](https://user-images.githubusercontent.com/15472253/154712154-3d3388bc-9f87-4968-992a-7b647e9c0522.png)
 
 Helium Exporter for Helium Pedigree Visualization Framework is custom data exporter that will transform germplasm and phenotypic data into format fully compatible with Helium Pedigree Visualization application.
 
