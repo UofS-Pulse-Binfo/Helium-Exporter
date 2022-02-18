@@ -1,8 +1,5 @@
 {
     "require-dev": {
         "statonlab/tripal-test-suite": "1.*"
-    },
-    "require": {
-        "php": "7.2"
     }
 }
