@@ -133,7 +133,18 @@ jobs:
       run: | 
         cd $DRUPAL_ROOT
         $DRUSH en -y rawpheno
-    # 7) Install Helium Exporter
+    # 7) Install Tripal Download API    
+    - name: Install Tripal Download API Dependencies
+      id: installtripaldownloadapi
+      env:
+        DRUSH: ${{ steps.tripalsetup.outputs.drush_path }}
+        DRUPAL_ROOT: ${{ steps.tripalsetup.outputs.drupal_root }}
+      run: |
+        cd $DRUPAL_ROOT/sites/all/modules
+        git clone https://github.com/tripal/trpdownload_api.git
+        cd $DRUPAL_ROOT
+        $DRUSH en -y trpdownload_api    
+    # 8) Install Helium Exporter
     - name: Install Helium Exporter
       id: installheliumexporter
       env:
@@ -144,7 +155,7 @@ jobs:
         cp -R * $DRUPAL_ROOT/sites/all/modules/helium_exporter
         cd $DRUPAL_ROOT
         $DRUSH en -y helium_exporter
-    # 7) Runs the PHPUnit tests.    
+    # 9) Runs the PHPUnit tests.    
     - name: PHPUnit Tests
       env:
         DRUSH: ${{ steps.tripalsetup.outputs.drush_path }}
