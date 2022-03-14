@@ -88,6 +88,10 @@ function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
   $is_configured = ($config == '0') ? FALSE : TRUE;
   $variables['is_configured'] = $is_configured; 
 
+  // Help url configuration.
+  $help_url = variable_get('helium_exporter_help_url');
+  $variables['help_url'] = trim($help_url);
+
   $variables['helium_resource'] = array(
     'download' => 'https://github.com/cardinalb/helium-docs/wiki/Download-Helium',
     'information' => 'https://github.com/cardinalb/helium-docs/wiki',

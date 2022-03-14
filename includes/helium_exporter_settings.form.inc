@@ -53,6 +53,7 @@ function helium_exporter_settings_form($form, &$form_state) {
           configure which relationships have the parent as the subject and
           which have the parent as the object.</li>
         <li>Ensure to indicate terms used to identify a maternal parent and a paternal parent.</li>
+        <li>(Optional) If you have setup a help page relating to use of this data exporter, provide URL/link in the help link field below.</li>
       </ol>
       <em><strong>NOTE:</strong> Each relationship can only be followed in ONE
         direction.</em>"
@@ -140,6 +141,21 @@ function helium_exporter_settings_form($form, &$form_state) {
     '#default_value' => $default_paternal,
   );
 
+  // Help link.
+  // If this configuration was set with a link, apply the value to the href attribute
+  // of help link in frontend.
+  $form['configure']['help_url']['container'] = array(
+    '#prefix' => '<div class="helium-exporter-configuration">',
+    '#suffix' => '</div>'
+  );
+
+  $help_url = variable_get('helium_exporter_help_url');  
+  $help_url = ($help_url == '#') ? '' : trim($help_url);
+  $form['configure']['help_url']['container']['help_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('URL/link to Helium Exporter help page. This field is optional. If not set, help link will be disabled in the interface.'),
+    '#default_value' => $help_url,
+  );  
 
   $form['configure']['submit'] = array(
     '#type' => 'submit',
@@ -203,4 +219,9 @@ function helium_exporter_settings_form_submit($form, $form_state) {
   );
   
   variable_set('helium_exporter_pedigree_relations', serialize($rels));
+  
+  // Save help page url/link. Set to # when not supplied and disable
+  // help link when # is the config value.
+  $help_url = ($form_state['values']['help_url']) ? $form_state['values']['help_url'] : '#';
+  variable_set('helium_exporter_help_url', $help_url);
 }

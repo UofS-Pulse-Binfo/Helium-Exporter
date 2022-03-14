@@ -16,4 +16,7 @@ function helium_exporter_enable() {
   // Default to 0 - frontend will remind user that
   // module has not been completely configured.
   variable_set('helium_exporter_pedigree_relations', 0);
+  // The URL to help page. Default to # character - is disabled
+  // in the interface.
+  variable_set('helium_exporter_help_url', '#');
 }
