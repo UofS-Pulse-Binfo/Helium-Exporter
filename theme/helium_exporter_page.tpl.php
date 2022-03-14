@@ -41,7 +41,7 @@
             <strong>Step #2:</strong>
             <p>
               Use the built-in data exporter below to generate a data file.<?php if ($help_url != '#') { ?> Click the link below for guide on using the exporter.
-              <a href="<?php print $help_url; ?>">&#xbb; How to download data</a>
+              <a href="<?php print $help_url; ?>" target="_blank">&#xbb; How to download data</a>
               <?php } ?>
               &nbsp;
             </p>
@@ -52,7 +52,7 @@
             <strong>Step #3:</strong>
             <p>
               Load the data file generated in step #2 into Helium to visualize.<?php if ($help_url != '#') { ?> Click the link below to explore and how to use Helium.
-              <a href="<?php print $help_url; ?>">&#xbb; How to load data into Helium</a>
+              <a href="<?php print $help_url; ?>" target="_blank">&#xbb; How to load data into Helium</a>
               <?php } ?>
               &nbsp;
             </p>
