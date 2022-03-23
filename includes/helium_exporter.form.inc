@@ -22,7 +22,7 @@ function helium_exporter_form($form, &$form_state) {
     $experiment_options = helium_exporter_get_experiments();
     
     // User has no active experiments assigned.
-    if (!$experiment_options) {
+    if (!$experiment_options || !user_is_logged_in()) {
       $form['download_data']['no_experiments'] = array(
         '#type' => 'markup',
         '#markup' => '<div class="messages status">No active experiments assigned to your account.</div>'
