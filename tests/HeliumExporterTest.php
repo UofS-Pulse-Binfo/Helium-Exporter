@@ -47,10 +47,15 @@ class HeliumExporterTest extends TripalTestCase {
     if ($data) {
       // EXPERIMENTS - get germplasm and traits used.
 
-      // Load experiment active in raw phenotypes for user id #1.
+      // Test authenticated user without experiments assigned.
       global $user;
-      $user->uid = 1;
-      
+      $user = user_load($data['user']);
+      $experiment = helium_exporter_get_experiments();
+      $this->assertEmpty($experiment, 'Authenticated user has no experiment and experiment has a value.');
+
+      // Load experiment active in raw phenotypes for user id #1 (Admin).    
+      global $user;
+      $user = user_load(1);
       $experiment = helium_exporter_get_experiments();
       $experiment_name = array_values($experiment)[0];
       $this->assertEquals($data['experiment']['name'], $experiment_name, 

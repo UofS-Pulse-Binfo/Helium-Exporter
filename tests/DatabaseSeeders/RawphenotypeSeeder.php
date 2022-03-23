@@ -9,6 +9,23 @@ class RawphenotypeSeeder extends Seeder
   public function up() {
     $data = array();
 
+    // Create user. This user is authenticated user
+    // but does not have any experiments assigned.
+    $new_user = array(
+      'name' => 'Helium Exporter',
+      'pass' => 'secret',
+      'mail' => 'helium_exporter@mytripalsite.com',
+      'status' => 1,
+      'init' => 'Email',
+      'roles' => array(
+          DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+      ),
+    );
+
+    // The first parameter is sent blank so a new user is created.
+    $user = user_save(new \stdClass(), $new_user);
+    $data['user'] = $user->uid;
+
     // Add cv - stock_relationship.
     $cv = chado_insert_cv('stock_relationship', 'Stock relationship');
     
