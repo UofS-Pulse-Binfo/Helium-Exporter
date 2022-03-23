@@ -200,6 +200,14 @@ class RawphenotypeSeeder extends Seeder
       'description' => 'Experiment 1'
     ));
 
+    // Add user to experiment.
+    db_insert('pheno_project_user')
+      ->fields(array(
+        'project_id' => $experiment['project_id'],
+        'uid' => 1 // Admin id.
+      ))
+      ->execute();
+
     $data['experiment'] = array(
       'id' => $experiment['project_id'],
       'name' => $experiment['name']
