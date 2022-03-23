@@ -5,28 +5,35 @@
  */
 
  /**
-  * Fetch all experiments with raw phenotypic data.
+  * Fetch all experiments with raw phenotypic data and limit only to 
+  * experiments that user has access to.
   *
   * @return array
   *   Associative array where the key is the project id and value as the project name
   *   This array will become array value in #option of the select field.
   */
 function helium_exporter_get_experiments() {
+  // User 
+  global $user;
+  
   // Initial value of the select experiment field when there is no
   // experiment in projects.
-  $experiments_option = array(0 => 'Select Experiment');
+  $experiments_option = array();
   
-  // All experiments in rawphenotypes.
+  // All experiments in rawphenotypes - only experiments where
+  // current user has permission to view and export data. 
   $experiments = chado_query("
     SELECT project_id, name FROM {project} WHERE project_id IN (
-      SELECT DISTINCT project_id FROM pheno_project_cvterm 
+      SELECT DISTINCT project_id FROM pheno_project_user WHERE uid = :user
     ) ORDER BY name ASC
-  ");
+  ", array(':user' => $user->uid));
   
   // Create associative array of experiments setting the first element
   // of the select field to the initial value plus all the experiments
   // returned by the query.
   if ($experiments->rowCount() > 0) {
+    $experiments_option[0] = 'Select Experiment';
+
     // Reset default and set it to the first experiment
     // in the list.
     $experiments_option = [];
