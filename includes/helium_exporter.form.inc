@@ -25,7 +25,7 @@ function helium_exporter_form($form, &$form_state) {
     if (!$experiment_options || !user_is_logged_in()) {
       $form['download_data']['no_experiments'] = array(
         '#type' => 'markup',
-        '#markup' => '<div class="messages status">No active experiments assigned to your account.</div>'
+        '#markup' => '<div class="messages status">No active experiments assigned to your account. Please contact the administrator and ask for permission to the raw phenotypic data experiments you are interested in visualizing.</div>'
       );
       
       return $form;
