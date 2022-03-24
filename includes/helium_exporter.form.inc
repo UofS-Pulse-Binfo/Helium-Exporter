@@ -205,7 +205,7 @@ function helium_exporter_form_submit($form, &$form_state) {
   $querystring = 'e=' . $experiment . '&g=' . $germplasm . '&t=' . $traits . '&l=' . $lineage . '&f=' . $He_categorical_file;
 
   $filename = 'He_parameters_' . date('YMd') .'_'. time() . '.txt';
-  $path = sys_get_temp_dir() . '/';
+  $path = file_directory_temp() . '/';
 
   $tmp_file =  file_create_url($path . $filename);
   $FILE = fopen($tmp_file, 'w') or die ('Unable to read temporary file.');
