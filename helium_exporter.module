@@ -229,7 +229,7 @@ function helium_exporter_trpdownload_generate_file($vars, $job_id = NULL) {
   $code = base64_decode($code);
   parse_str($code, $values);
 
-  $path = sys_get_temp_dir() . '/';
+  $path = file_directory_temp() . '/';
   $He_file =  $path . $values['he'];
   $querystring = file_get_contents($He_file);
   unset($values);
