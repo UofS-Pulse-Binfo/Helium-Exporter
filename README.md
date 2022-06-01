@@ -1,11 +1,11 @@
 ![Tripal Dependency](https://img.shields.io/badge/tripal-%3E=3.0-brightgreen)
 [![Run PHPUnit Tests](https://github.com/UofS-Pulse-Binfo/helium_exporter/actions/workflows/phpunit.yml/badge.svg)](https://github.com/UofS-Pulse-Binfo/helium_exporter/actions/workflows/phpunit.yml)
 
-# Helium-Exporter
+# Helium Data Exporter
 
 ![banner](https://user-images.githubusercontent.com/15472253/154712154-3d3388bc-9f87-4968-992a-7b647e9c0522.png)
 
-Helium Exporter is a custom Tripal data exporter that will download germplasm and phenotypic data into a file format that is fully compatible with the [Helium Pedigree Visualization Framework](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259).
+Helium Data Exporter is a custom Tripal data exporter that will download germplasm and phenotypic data into a file format that is fully compatible with the [Helium Pedigree Visualization Framework](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-259).
 
 ## Dependencies
 
@@ -16,7 +16,7 @@ Helium Exporter is a custom Tripal data exporter that will download germplasm an
 **Note: For phenotypic data, this module assumes you have used the raw phenotypes module linked to above. This means that the data is not stored in Chado but in a custom schema within Drupal. If you are interested in this module but have phenotypes stored differently, let us know as we're happy to work with you to support other storage options!**
 
 ## Installation
-### Exporter (this module)
+### Helium Data Exporter (this module)
 1. Install all dependencies. Please note to also install all the dependencies for the Raw Phenotypes module as well.
 2. Install and enable this module as you would any other Drupal Module.
 3. Configure module. Link to configuration page is displayed next to the enabled module in the modules page.
@@ -34,7 +34,7 @@ This work is supported by Saskatchewan Pulse Growers [grant: BRE1516, BRE0601], 
 
 ## Citation
 
-Reynold L. Tan (2022). Helium Exporter: Visualizing large-scale phenotypic data and germplasm pedigrees in Tripal using Helium. University of Saskatchewan, Pulse Crop Research Group, Saskatoon, SK, Canada.
+Reynold L. Tan (2022). Helium Data Exporter: Visualizing large-scale phenotypic data and germplasm pedigrees in Tripal using Helium. University of Saskatchewan, Pulse Crop Research Group, Saskatoon, SK, Canada.
 
 This module relies on Tripal and Helium whose citations are below:
 
