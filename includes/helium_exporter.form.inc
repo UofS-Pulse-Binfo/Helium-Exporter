@@ -77,7 +77,7 @@ function helium_exporter_form($form, &$form_state) {
         <strong>%s:</strong> %d <span class="helium-exporter-selections"></span>
         <span class="helium-exporter-field-options">
           <a href="#" alt="Search a value" title="Search a value">Search</a> | 
-          <a class="helium-exporter-item-check" href="#" alt="Select or deselect all options" title="Select or deselect all options">All</a>
+          <input type="checkbox">&nbsp;Select All
         </span>
         <div class="helium-exporter-custom-checkbox-search">
           <input type="text" value="">
