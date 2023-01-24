@@ -99,12 +99,11 @@
       //
 
       // Add event listener to select and deselect option.
-      $('.helium-exporter-field-options a:last-child')
+      $('.helium-exporter-field-options input[type="checkbox"]')
         .click(function(e) {
-          e.preventDefault();
           // Current item selected.
           var element = $(this);
-            
+          
           // Identify which custom checkbox set to affect event
           // and reference components to use.
           var customCheckboxSet = customCheckboxGetSet(element);
@@ -113,8 +112,8 @@
           // Set state of item (check or uncheck).
           // Elements: class to remove, class to add.
           var checkClass = [];
-
-          if (element.hasClass(checkState.on)) {
+          
+          if (element.is(':checked')) {
             // Item select all. OFF to ON (all).
             checkClass.push(checkState.on, checkState.off);
 
@@ -126,12 +125,7 @@
             checkClass.push(checkState.off, checkState.on);
             checkTable[ customCheckboxSet ] = [];
           }
-            
-          // Apply class to show state of item.
-          element
-            .removeClass(checkClass[0])
-            .addClass(checkClass[1]);
-            
+
           items
             .removeClass(checkClass[1])
             .addClass(checkClass[0]);
