@@ -21,7 +21,7 @@
       <h2>Visualize plant pedigrees and overlay categorical data using Helium:</h2>
       <p>
         Helium is a generic platform in which various data types can be shown in a pedigree context.&nbsp;&nbsp;<a id="helium-exporter-show" href="#">Show me how</a><br />
-        <a href="<?php print $helium_resource['download']; ?>" target="_blank">Download Helium</a> | <a href="<?php print $helium_resource['information']; ?>" target="_blank">More Information</a>
+        <a href="<?php print $helium_resource['download']; ?>" target="_blank">Download Helium</a> | <a href="<?php print $helium_resource['web-base']; ?>" target="_blank">Web-based Helium</a> | <a href="<?php print $helium_resource['information']; ?>" target="_blank">More Information</a>
       </p>
       
       <div id="helium-exporter-show-window">
@@ -33,6 +33,7 @@
             <p>
               Download and install Helium viewer application in your computer. Please use the link below and select an operating system.
               <a href="<?php print $helium_resource['download']; ?>">&#xbb; Download and install Helium</a>
+              <a href="<?php print $helium_resource['web-base']; ?>">&#xbb; or use the Web-based Helium</a>
             </p>
           </div>
 

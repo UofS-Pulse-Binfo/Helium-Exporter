@@ -95,7 +95,8 @@ function helium_exporter_preprocess_helium_exporter_form(&$variables, $hook) {
   $variables['helium_resource'] = array(
     'download' => 'https://github.com/cardinalb/helium-docs/wiki/Download-Helium',
     'information' => 'https://github.com/cardinalb/helium-docs/wiki',
-    'help' => 'https://github.com/cardinalb/helium-docs/wiki/Data-Formats'
+    'help' => 'https://github.com/cardinalb/helium-docs/wiki/Data-Formats',
+    'web-base' => 'https://helium.hutton.ac.uk', 
   );
 }
 
